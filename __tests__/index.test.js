@@ -2,7 +2,7 @@ const {
   getAllRecordTitles,
   checkIfAnyRecordHasGenre,
   findByTitle,
-  getAllRecordsLongerThanNumberOfSeconds,
+  filterByLabel,
   checkMinYear,
   getArtistAndTitleObjects,
 } = require("..");
@@ -95,25 +95,25 @@ describe("findByTitle()", () => {
   });
 });
 
-describe("getAllRecordsLongerThanNumberOfSeconds()", () => {
+describe("filterByLabel()", () => {
   test("should use the `.filter()` method", () => {
-    const text = getAllRecordsLongerThanNumberOfSeconds.toString();
+    const text = filterByLabel.toString();
     expect(text).toMatch(/\.filter\(.*\)/s);
   });
   test("should throw an error if there are no records", () => {
-    const actual = () => getAllRecordsLongerThanNumberOfSeconds([]);
+    const actual = () => filterByLabel([]);
     expect(actual).toThrow();
   });
-  test("should return all records that are longer than the given number of seconds", () => {
-    const lengthInSeconds = 4200;
-    const actual = getAllRecordsLongerThanNumberOfSeconds(records, lengthInSeconds);
-    const expected = ["To Pimp a Butterfly", "Random Access Memories"];
+  test("should return all records that include the specified label", () => {
+    const label = "Track";
+    const actual = filterByLabel(records, label);
+    const expected = ["Axis: Bold as Love"];
     expect(actual.length).toEqual(expected.length);
   });
-  test("should dynamically change depending on the time inputted", () => {
-    const lengthInSeconds = 3600;
-    const actual = getAllRecordsLongerThanNumberOfSeconds(records, lengthInSeconds);
-    const expected = ["To Pimp a Butterfly", "Supa Dupa Fly", "Blond", "Random Access Memories"];
+  test("should dynamically change depending on the label inputted", () => {
+    const label = "Capitol";
+    const actual = filterByLabel(records, label);
+    const expected = ["Music From Big Pink", "Pet Sounds", "OK Computer"];
     expect(actual.length).toEqual(expected.length);
   });
 });
